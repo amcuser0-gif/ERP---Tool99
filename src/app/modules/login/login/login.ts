@@ -22,7 +22,7 @@ export class Login {
   constructor(
     private auth: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   login() {
 
@@ -69,22 +69,16 @@ export class Login {
 
       next: (res: any) => {
 
-        localStorage.setItem(
-          'token',
-          res.token
-        );
+        console.log('Verify OTP Response:', res);
 
-        localStorage.setItem(
-          'user',
-          JSON.stringify(res.user)
-        );
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
+
+        console.log('Saved User:', localStorage.getItem('user'));
 
         alert('Login Successful');
 
-        this.router.navigate([
-          '/dashboard'
-        ]);
-
+        this.router.navigate(['/dashboard']);
       },
 
       error: (err) => {

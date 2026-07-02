@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class App {
 
-  constructor(private router: Router) { }
+  constructor(public router: Router) { }
 
   }
 
