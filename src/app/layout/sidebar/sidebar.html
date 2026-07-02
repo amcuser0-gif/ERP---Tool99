@@ -107,8 +107,8 @@
   <div class="sidebar-footer" *ngIf="user">
     <div class="user-row">
 
-      <img *ngIf="user.profileImage" [src]="'http://localhost:4001' + user.profileImage"
-        class="user-avatar-img" alt="Profile">
+      <img *ngIf="user.profileImage" [src]="'http://localhost:4001' + user.profileImage" class="user-avatar-img"
+        alt="Profile">
 
       <div *ngIf="!user.profileImage" class="user-avatar">
         {{ user.userName.charAt(0) }}
@@ -121,6 +121,12 @@
 
         <div class="user-role">
           {{ user.userType }}
+          <ng-container *ngIf="user.department">
+            | {{ user.department }}
+          </ng-container>
+          <ng-container *ngIf="user.institute">
+            | {{ user.institute }}
+          </ng-container>
         </div>
       </div>
 
