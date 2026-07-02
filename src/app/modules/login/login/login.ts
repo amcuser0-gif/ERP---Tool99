@@ -99,5 +99,91 @@ export class Login {
     });
 
   }
+  
+/*Forgot Password Modal*/
+ showForgotPassword = false;
+
+forgotEmail = '';
+
+forgotOTP = '';
+
+forgotOtpSent = false;
+
+forgotOtpVerified = false;
+
+newPassword = '';
+
+confirmPassword = '';
+
+openForgotPassword(event: Event) {
+
+  event.preventDefault();
+
+  this.showForgotPassword = true;
+
+}
+
+closeForgotPassword() {
+
+  this.showForgotPassword = false;
+
+  this.forgotEmail = '';
+  this.forgotOTP = '';
+  this.newPassword = '';
+  this.confirmPassword = '';
+
+  this.forgotOtpSent = false;
+  this.forgotOtpVerified = false;
+
+}
+
+sendForgotOTP() {
+
+  if (!this.forgotEmail) {
+
+    alert("Enter Email or Mobile");
+
+    return;
+
+  }
+
+  alert("OTP Sent Successfully");
+
+  this.forgotOtpSent = true;
+
+}
+
+verifyForgotOTP() {
+
+  if (this.forgotOTP === "123456") {
+
+    alert("OTP Verified");
+
+    this.forgotOtpVerified = true;
+
+  }
+  else{
+
+    alert("Invalid OTP");
+
+  }
+
+}
+
+updatePassword() {
+
+  if(this.newPassword !== this.confirmPassword){
+
+    alert("Passwords do not match");
+
+    return;
+
+  }
+
+  alert("Password Updated Successfully");
+
+  this.closeForgotPassword();
+
+}
 
 }
