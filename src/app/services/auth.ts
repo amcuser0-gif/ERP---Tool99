@@ -27,6 +27,23 @@ export class AuthService {
     );
   }
 
+  // Forgot Password
+  forgotPassword(data: any) {
+    return this.http.post(`${this.api}/forgot-password`, data);
+  }
+
+  verifyForgotOtp(data: any) {
+    return this.http.post(
+      `${this.api}/verify-forgot-otp`,
+      data
+    );
+  }
+
+  // Reset Password
+  resetPassword(data: any) {
+    return this.http.post(`${this.api}/reset-password`, data);
+  }
+
   getUser() {
     if (!isPlatformBrowser(this.platformId)) {
       return null;
@@ -37,7 +54,7 @@ export class AuthService {
   }
 
   saveUser(user: any) {
-     if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('user', JSON.stringify(user));
     }
   }

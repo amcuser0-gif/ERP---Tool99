@@ -1,6 +1,5 @@
-
 <div class="login-page">
-  
+
 
   <!-- Left Side -->
   <div class="login-left">
@@ -20,7 +19,7 @@
         <div>✔ Student & Faculty Portal</div>
       </div>
     </div>
-   
+
   </div>
 
   <!-- Right Side -->
@@ -34,53 +33,50 @@
         Sign in to continue
       </p>
 
-      <form>
+      <form (ngSubmit)="$event.preventDefault()">
 
         <div class="input-group">
           <label>Email Address</label>
-         <input type="email" [(ngModel)]="email" name="email" [disabled]="otpSent"  placeholder="Enter Email">   </div>
+          <input type="email" [(ngModel)]="email" name="email" placeholder="Enter Email">
+        </div>
 
         <div class="input-group">
           <label>Password</label>
-        <input type="password" [(ngModel)]="password" name="password" placeholder="Enter Password">
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Enter Password">
         </div>
 
-     
-
-        
-  <button
-    type="button"
-    (click)="login()">
-
-    Login
-
-  </button>
 
 
-  <!-- OTP -->
 
-  <div class="input-group" *ngIf="otpSent">
+        <button type="button" (click)="login()">
 
-    <label>Enter OTP</label>
+          Login
 
-    <input
-      type="text"
-      maxlength="6"
-      [(ngModel)]="otp"
-      name="otp"
-      placeholder="Enter OTP">
+        </button>
 
-  </div>
 
-  <!-- Verify Button -->
+        <!-- OTP -->
+        <div *ngIf="otpSent">
 
-  <button
-    type="button"
-    (click)="verifyOTP()">
+          <h3>Verify OTP</h3>
 
-    Verify OTP
+          <p>OTP sent to <b>{{email}}</b></p>
 
-  </button>
+          <div class="input-group">
+
+            <label>OTP</label>
+
+            <input type="text" maxlength="6" [(ngModel)]="otp" name="otp">
+
+          </div>
+
+          <button type="button" (click)="verifyOTP()">
+
+            Verify OTP
+
+          </button>
+
+        </div>
 
         <div class="options">
           <label>
@@ -95,99 +91,92 @@
       </form>
 
     </div>
-    
+
 
   </div>
 
 
   <!-- Forgot Password Modal -->
-<div class="login-right">
+  <!-- Forgot Password -->
+  <div class="login-right">
 
-<div class="login-card forgot-card" *ngIf="showForgotPassword">
+    <div class="login-card forgot-card" *ngIf="showForgotPassword">
 
-    <div class="forgot-header">
-
-
+      <div class="forgot-header">
         <h2>Forgot Password</h2>
-
         <p>Reset your password using OTP verification.</p>
+      </div>
 
-    </div>
+      <!-- Step 1 : Send OTP -->
 
-    <!-- Step 1 -->
-
-    <div *ngIf="!forgotOtpSent">
+      <div *ngIf="!forgotOtpSent">
 
         <div class="input-group">
-            <label>Email Address</label>
+          <label>Email Address</label>
 
-            <input
-                type="email"
-                [(ngModel)]="forgotEmail"
-                placeholder="Enter Registered Email">
+          <input type="email" [(ngModel)]="forgotEmail" placeholder="Enter Registered Email">
         </div>
 
-        <button (click)="sendForgotOTP()">
-            Send OTP
+        <button type="button" [disabled]="loading" (click)="sendForgotOTP()">
+          {{ loading ? 'Sending...' : 'Send OTP' }}
+
         </button>
 
-    </div>
+      </div>
 
-    <!-- Step 2 -->
+      <!-- Step 2 : Enter OTP + New Password -->
 
-    <div *ngIf="forgotOtpSent && !forgotOtpVerified">
+      <div *ngIf="forgotOtpSent  && !forgotOtpVerified">
 
         <div class="input-group">
-            <label>OTP</label>
+          <label>OTP</label>
 
-            <input
-                maxlength="6"
-                [(ngModel)]="forgotOTP"
-                placeholder="Enter OTP">
+          <input type="text" maxlength="4" [(ngModel)]="forgotOTP" placeholder="Enter OTP">
         </div>
 
-        <button (click)="verifyForgotOTP()">
-            Verify OTP
+        <button type="button" (click)="verifyForgotOTP()">
+
+          Verify OTP
+
         </button>
 
-    </div>
+      </div>
 
-    <!-- Step 3 -->
+      <!-- Step 3 : New Password -->
 
-    <div *ngIf="forgotOtpVerified">
+      <div *ngIf="forgotOtpVerified">
 
         <div class="input-group">
-            <label>New Password</label>
 
-            <input
-                type="password"
-                [(ngModel)]="newPassword">
+          <label>New Password</label>
+
+          <input type="password" [(ngModel)]="newPassword" placeholder="Enter New Password">
+
         </div>
 
         <div class="input-group">
-            <label>Confirm Password</label>
 
-            <input
-                type="password"
-                [(ngModel)]="confirmPassword">
+          <label>Confirm Password</label>
+
+          <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm New Password">
+
         </div>
 
-        <button (click)="updatePassword()">
-            Update Password
+        <button type="button" (click)="updatePassword()">
+
+          Reset Password
+
         </button>
 
-    </div>
+      </div>
 
-    <div class="back-login">
-
-        <a href="#" (click)="showForgotPassword = false; $event.preventDefault()">
-            ← Back to Login
+      <div class="back-login">
+        <a href="#" (click)="closeForgotPassword(); $event.preventDefault()">
+          ← Back to Login
         </a>
+      </div>
 
     </div>
 
+  </div>
 </div>
-
-</div>
-</div>
-

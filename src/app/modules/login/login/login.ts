@@ -16,6 +16,7 @@ export class Login {
   email = '';
   password = '';
   otp = '';
+  loading = false;
 
   otpSent = false;
 
@@ -40,9 +41,13 @@ export class Login {
 
       next: (res: any) => {
 
-        alert(res.message);
-
         this.otpSent = true;
+        setTimeout(() => {
+
+          alert(res.message);
+
+        }, 0);
+
       },
 
       error: (err) => {
@@ -93,91 +98,164 @@ export class Login {
     });
 
   }
-  
-/*Forgot Password Modal*/
- showForgotPassword = false;
 
-forgotEmail = '';
+  /*Forgot Password Modal*/
+  showForgotPassword = false;
 
-forgotOTP = '';
+  forgotEmail = '';
 
-forgotOtpSent = false;
+  forgotOTP = '';
 
-forgotOtpVerified = false;
+  forgotOtpSent = false;
 
-newPassword = '';
+  forgotOtpVerified = false;
 
-confirmPassword = '';
+  newPassword = '';
 
-openForgotPassword(event: Event) {
+  confirmPassword = '';
 
-  event.preventDefault();
+  openForgotPassword(event: Event) {
 
-  this.showForgotPassword = true;
+    event.preventDefault();
 
-}
-
-closeForgotPassword() {
-
-  this.showForgotPassword = false;
-
-  this.forgotEmail = '';
-  this.forgotOTP = '';
-  this.newPassword = '';
-  this.confirmPassword = '';
-
-  this.forgotOtpSent = false;
-  this.forgotOtpVerified = false;
-
-}
-
-sendForgotOTP() {
-
-  if (!this.forgotEmail) {
-
-    alert("Enter Email or Mobile");
-
-    return;
+    this.showForgotPassword = true;
 
   }
 
-  alert("OTP Sent Successfully");
+  closeForgotPassword() {
 
-  this.forgotOtpSent = true;
+    this.showForgotPassword = false;
 
-}
+    this.forgotEmail = '';
+    this.forgotOTP = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
 
-verifyForgotOTP() {
-
-  if (this.forgotOTP === "123456") {
-
-    alert("OTP Verified");
-
-    this.forgotOtpVerified = true;
-
-  }
-  else{
-
-    alert("Invalid OTP");
+    this.forgotOtpSent = false;
+    this.forgotOtpVerified = false;
 
   }
 
-}
+  sendForgotOTP() {
 
-updatePassword() {
+    if (!this.forgotEmail) {
+      alert("Enter Email");
+      return;
+    }
 
-  if(this.newPassword !== this.confirmPassword){
+    this.loading = true;
 
-    alert("Passwords do not match");
+    this.auth.forgotPassword({
+      email: this.forgotEmail
+    }).subscribe({
 
-    return;
+      next: (res: any) => {
+
+        this.loading = false;
+
+        this.forgotOtpSent = true;
+
+        // setTimeout(() => {
+
+        //   alert(res.message);
+
+        // }, 0);
+      },
+
+      error: (err) => {
+
+        this.loading = false;
+
+        alert(
+          err.error.message ||
+          "Failed to send OTP"
+        );
+
+      }
+
+    });
 
   }
 
-  alert("Password Updated Successfully");
+  verifyForgotOTP() {
 
-  this.closeForgotPassword();
+    if (!this.forgotOTP) {
 
-}
+      alert("Enter OTP");
+
+      return;
+
+    }
+
+    this.auth.verifyForgotOtp({
+
+      email: this.forgotEmail,
+      otp: this.forgotOTP
+
+    }).subscribe({
+
+      next: (res: any) => {
+
+        alert(res.message);
+
+        this.forgotOtpVerified = true;
+
+      },
+
+      error: (err) => {
+
+        alert(err.error.message);
+
+      }
+
+    });
+
+  }
+
+  updatePassword() {
+
+    if (!this.newPassword || !this.confirmPassword) {
+      alert("Enter Password");
+      return;
+    }
+
+    if (this.newPassword !== this.confirmPassword) {
+
+      alert("Passwords do not match");
+
+      return;
+
+    }
+
+    const payload = {
+
+      email: this.forgotEmail,
+      password: this.newPassword,
+      confirmPassword: this.confirmPassword
+
+    };
+
+    this.auth.resetPassword(payload).subscribe({
+
+      next: (res: any) => {
+
+        alert(res.message);
+
+        this.closeForgotPassword();
+
+      },
+
+      error: (err) => {
+
+        alert(
+          err.error.message ||
+          "Password reset failed"
+        );
+
+      }
+
+    });
+
+  }
 
 }
