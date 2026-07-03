@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AdmissionsRoutingModule,CommonModule, DashboardModule, Sidebar],
+  imports: [AdmissionsRoutingModule,CommonModule, DashboardModule, Sidebar, ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

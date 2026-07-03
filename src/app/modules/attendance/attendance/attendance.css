@@ -1,33 +1,124 @@
-.month-btn{
+/* ===========================
+   Month Navigation
+=========================== */
 
+
+.card-hd{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.month-btn{
     border:none;
     background:#2563eb;
     color:#fff;
     padding:8px 14px;
     border-radius:8px;
     cursor:pointer;
-
+    font-size:14px;
+    transition:.3s;
 }
 
 .month-btn:hover{
-
     background:#0f4c81;
-
-}
-
-.card-hd{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:15px;
-
 }
 
 .card-hd select{
-
-    padding:8px 10px;
+    padding:8px 12px;
     border-radius:8px;
     border:1px solid #ddd;
+    font-size:14px;
+    min-width:140px;
+    outline:none;
+}
+
+/* ===========================
+   Laptop (1200px)
+=========================== */
+
+@media (max-width:1200px){
+
+    .card-hd{
+        gap:10px;
+    }
+
+    .card-hd select{
+        min-width:120px;
+    }
+
+}
+
+/* ===========================
+   Tablet (992px)
+=========================== */
+
+@media (max-width:992px){
+
+    .card-hd{
+        justify-content:center;
+        gap:10px;
+    }
+
+    .month-btn{
+        padding:8px 12px;
+        font-size:13px;
+    }
+
+    .card-hd select{
+        min-width:120px;
+        font-size:13px;
+    }
+
+}
+
+/* ===========================
+   Mobile (768px)
+=========================== */
+
+@media (max-width:768px){
+
+  
+    .card-hd{
+        flex-direction:column;
+        align-items:stretch;
+        gap:12px;
+    }
+
+    .month-btn{
+        width:100%;
+        padding:12px;
+        font-size:14px;
+    }
+
+    .card-hd select{
+        width:100%;
+        min-width:100%;
+        font-size:14px;
+    }
+
+}
+
+/* ===========================
+   Small Mobile (480px)
+=========================== */
+
+@media (max-width:480px){
+
+    .card-hd{
+        gap:8px;
+    }
+
+    .month-btn{
+        padding:10px;
+        font-size:13px;
+    }
+
+    .card-hd select{
+        padding:10px;
+        font-size:13px;
+    }
 
 }

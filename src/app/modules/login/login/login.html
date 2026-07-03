@@ -26,7 +26,7 @@
   <!-- Right Side -->
   <div class="login-right">
 
-    <div class="login-card">
+    <div class="login-card" *ngIf="!showForgotPassword">
 
       <h2>Welcome Back</h2>
 
@@ -88,14 +88,106 @@
             Remember Me
           </label>
 
-          <a href="#">Forgot Password?</a>
+          <a href="#" (click)="openForgotPassword($event)">Forgot Password?</a>
         </div>
 
 
       </form>
 
     </div>
+    
 
   </div>
 
+
+  <!-- Forgot Password Modal -->
+<div class="login-right">
+
+<div class="login-card forgot-card" *ngIf="showForgotPassword">
+
+    <div class="forgot-header">
+
+
+        <h2>Forgot Password</h2>
+
+        <p>Reset your password using OTP verification.</p>
+
+    </div>
+
+    <!-- Step 1 -->
+
+    <div *ngIf="!forgotOtpSent">
+
+        <div class="input-group">
+            <label>Email Address</label>
+
+            <input
+                type="email"
+                [(ngModel)]="forgotEmail"
+                placeholder="Enter Registered Email">
+        </div>
+
+        <button (click)="sendForgotOTP()">
+            Send OTP
+        </button>
+
+    </div>
+
+    <!-- Step 2 -->
+
+    <div *ngIf="forgotOtpSent && !forgotOtpVerified">
+
+        <div class="input-group">
+            <label>OTP</label>
+
+            <input
+                maxlength="6"
+                [(ngModel)]="forgotOTP"
+                placeholder="Enter OTP">
+        </div>
+
+        <button (click)="verifyForgotOTP()">
+            Verify OTP
+        </button>
+
+    </div>
+
+    <!-- Step 3 -->
+
+    <div *ngIf="forgotOtpVerified">
+
+        <div class="input-group">
+            <label>New Password</label>
+
+            <input
+                type="password"
+                [(ngModel)]="newPassword">
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+
+            <input
+                type="password"
+                [(ngModel)]="confirmPassword">
+        </div>
+
+        <button (click)="updatePassword()">
+            Update Password
+        </button>
+
+    </div>
+
+    <div class="back-login">
+
+        <a href="#" (click)="showForgotPassword = false; $event.preventDefault()">
+            ← Back to Login
+        </a>
+
+    </div>
+
 </div>
+
+</div>
+</div>
+
